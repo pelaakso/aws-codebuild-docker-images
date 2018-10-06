@@ -113,7 +113,7 @@ ENV JAVA_VERSION=11 \
     SBT_VERSION=1.1.6 \
     PROPERTIES_COMMON_VERSION=0.92.37.8 \
     PYTHON_TOOL_VERSION="3.3-*" \
-    JDK_VERSION=9.0.4 \
+    JDK_VERSION=11 \
     JDK_DOWNLOAD_SHA256="3784cfc4670f0d4c5482604c7c513beb1a92b005f569df9bf100e8bef6610f2e" \
     ANT_DOWNLOAD_SHA512="73f2193700b1d1e32eedf25fab1009e2a98fb2f6425413f5c9fa1b0f2f9f49f59cb8ed3f04931c808ae022a64ecfa2619e5fb77643fea6dbc29721e489eb3a07" \
     MAVEN_DOWNLOAD_SHA1="22cac91b3557586bb1eba326f2f7727543ff15e3" \
@@ -126,14 +126,14 @@ RUN set -ex \
     && apt-get install -y software-properties-common=$PROPERTIES_COMMON_VERSION \
     && apt-get install -y python-setuptools=$PYTHON_TOOL_VERSION \
 
-    # Install OpenJDK 9
+    # Install OpenJDK 11
     # Note: Installing ca-certificates-java installs JDK7 because it's a depedency.
-    # We will use update-alternatives to make sure JDK9 has higher priority for all
+    # We will use update-alternatives to make sure JDK11 has higher priority for all
     # the tools
     && apt-get install -y --no-install-recommends ca-certificates-java \
 
     && mkdir -p $JAVA_HOME \
-    && curl -LSso /var/tmp/$JDK_DOWNLOAD_TAR https://download.java.net/java/GA/jdk9/$JDK_VERSION/binaries/$JDK_DOWNLOAD_TAR \
+    && curl -LSso /var/tmp/$JDK_DOWNLOAD_TAR https://download.java.net/java/ga/jdk11/$JDK_DOWNLOAD_TAR \
     && echo "$JDK_DOWNLOAD_SHA256 /var/tmp/$JDK_DOWNLOAD_TAR" | tee foo.txt | sha256sum -c - \
     && tar xzvf /var/tmp/$JDK_DOWNLOAD_TAR -C $JAVA_HOME --strip-components=1 \
     && for tool_path in $JAVA_HOME/bin/*; do \
